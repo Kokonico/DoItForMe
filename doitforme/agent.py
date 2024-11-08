@@ -24,7 +24,7 @@ class Agent:
         # get the command from the response
         command = response["message"]["content"]
         if "$DONE$" in command:
-            print("\033[1;37;40m-->", command)
+            print("\033[1;37m-->", command)
             return True
         else:
             # run the command
@@ -32,10 +32,10 @@ class Agent:
                 "role": "assistant",
                 "content": command
             })
-            print("\033[1;32;40m-->", command)
+            print("\033[1;32m-->", command)
             consent = input("Do you want to run this command? (y/n): ")
             if consent.lower() == "n":
-                print("\033[1;31;40m-->", "User denied command execution")
+                print("\033[1;31m-->", "User denied command execution")
                 self.context.append({
                     "role": "user",
                     "content": "System denied command execution"
@@ -43,13 +43,13 @@ class Agent:
                 return False
             result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
             if result.returncode != 0:
-                print("\033[1;31;40m-->", str(result.stderr.decode("utf-8")))
+                print("\033[1;31m-->", str(result.stderr.decode("utf-8")))
                 self.context.append({
                     "role": "user",
                     "content": result.stderr.decode("utf-8")
                 })
             else:
-                print("\033[1;33;40m-->", str(result.stdout.decode("utf-8")))
+                print("\033[1;33m-->", str(result.stdout.decode("utf-8")))
                 self.context.append({
                     "role": "user",
                     "content": result.stdout.decode("utf-8")
