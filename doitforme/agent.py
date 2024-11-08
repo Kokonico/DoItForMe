@@ -1,6 +1,7 @@
 import ollama
 import subprocess
 import os
+import re
 
 
 class Agent:
@@ -43,17 +44,20 @@ class Agent:
                 return False
             result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
             if result.returncode != 0:
-                print("\033[1;31m-->", str(result.stderr.decode("utf-8")))
-                self.context.append({
-                    "role": "user",
-                    "content": result.stderr.decode("utf-8")
-                })
+                print("\033[1;31m-->", end="")
             else:
-                print("\033[1;33m-->", str(result.stdout.decode("utf-8")))
-                self.context.append({
-                    "role": "user",
-                    "content": result.stdout.decode("utf-8")
-                })
+                print("\033[1;33m-->", end="")
+
+            output = result.stdout.decode("utf-8") + "\n" + result.stderr.decode("utf-8")
+            # remove ansii color codes from output
+            output_noansii = re.sub(r"\033\[\d+;\d+m", "", output)
+
+            print(output_noansii)
+            self.context.append({
+                "role": "user",
+                "content": output_noansii
+            })
+
             return False
 
 
