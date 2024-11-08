@@ -42,20 +42,30 @@ class Agent:
                     "content": "System denied command execution"
                 })
                 return False
-            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-            if result.returncode != 0:
-                print("\033[1;31m-->", end="")
-            else:
-                print("\033[1;33m-->", end="")
+            for command in re.split(r'[;\n]', command):
+                if "$DONE$" in command:
+                    print("\033[1;37m-->", command)
+                    return True
+                if command.startswith("cd "):
+                    directory = command.split(" ")[1].split("\n")[0]
+                    try:
+                        os.chdir(directory)
+                    except FileNotFoundError:
+                        pass  # do nothing
+                result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+                if result.returncode != 0:
+                    print("\033[1;31m-->", end="")
+                else:
+                    print("\033[1;33m-->", end="")
 
-            output = result.stdout.decode("utf-8") + "\n" + result.stderr.decode("utf-8")
-            # remove ansii color codes from output
-            output_noansii = re.sub(r"\033\[\d+;\d+m", "", output)
+                output = result.stdout.decode("utf-8") + "\n" + result.stderr.decode("utf-8")
+                # remove ansii color codes from output
+                output_noansii = re.sub(r"\033\[\d+;\d+m", "", output)
 
-            print(output_noansii)
-            self.context.append({
-                "role": "user",
-                "content": output_noansii
-            })
+                print(output_noansii)
+                self.context.append({
+                    "role": "user",
+                    "content": output_noansii
+                })
 
             return False
