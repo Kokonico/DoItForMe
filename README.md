@@ -1,6 +1,14 @@
 # DoitForMe
 > abuse AI to run commands on your computer for you
 
+## WARNING
+I do ***NOT*** take responsibility for any damage caused by this software.
+This software should ***NOT*** be used in a production environment.
+This software is ***NOT*** secure and should ***NOT*** be used on any system that contains sensitive information.
+This software is ***NOT*** intended to be used by anyone, and should ***NOT*** be used by anyone.
+This software is ***NOT*** intended to be used for any purpose, and should ***NOT*** be used for any purpose.
+By using this software, you agree that I am not responsible for the inevitable destruction of your system.
+
 ## Installation
 ```bash
 pip3.12 install doitforme
