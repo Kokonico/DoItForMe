@@ -4,6 +4,7 @@ version = "1.0.0"
 description = "Abuse AI to do your work"
 authors = ["Kokonico <kokonico@duck.com>"]
 readme = "README.md"
+scripts = { "difm" = "doitforme.main:main" }
 
 [tool.poetry.dependencies]
 python = "^3.12"

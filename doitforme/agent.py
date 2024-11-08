@@ -59,10 +59,3 @@ class Agent:
             })
 
             return False
-
-
-if __name__ == "__main__":
-    agent = Agent(model="dolphin-llama3", goal="find the python file in the current directory and print it's contents")
-    stop = False
-    while not stop:
-        stop = agent.tick()
