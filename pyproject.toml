@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "doitforme"
+version = "1.0.0"
+description = "Abuse AI to do your work"
+authors = ["Kokonico <kokonico@duck.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ollama = "^0.3.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
