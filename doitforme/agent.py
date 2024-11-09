@@ -50,19 +50,16 @@ class Agent:
                 directory = "/"
                 if command.startswith("cd "):
                     directory = command.split(" ")[1].split("\n")[0]
-                    try:
-                        if directory.startswith("~"):
-                            directory = os.path.expanduser(directory)
-                        elif directory.startswith("."):
-                            directory = os.path.join(os.getcwd(), directory)
-                        elif directory.startswith(".."):
-                            directory = os.path.join(os.getcwd(), directory)
-                        elif not directory.startswith("/"):
-                            directory = os.path.join(os.getcwd(), directory)
-                        print(directory)
-                        change_to_directory = True
-                    except FileNotFoundError:
-                        pass  # do nothing
+                    if directory.startswith("~"):
+                        directory = os.path.expanduser(directory)
+                    elif directory.startswith("."):
+                        directory = os.path.join(os.getcwd(), directory)
+                    elif directory.startswith(".."):
+                        directory = os.path.join(os.getcwd(), directory)
+                    elif not directory.startswith("/"):
+                        directory = os.path.join(os.getcwd(), directory)
+                    print(directory)
+                    change_to_directory = True
                 result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
                 if result.returncode != 0:
                     print("\033[1;31m-->", end="")
@@ -79,6 +76,9 @@ class Agent:
                     "content": output_noansii
                 })
                 if change_to_directory:
-                    os.chdir(directory)
+                    try:
+                        os.chdir(directory)
+                    except FileNotFoundError:
+                        pass
 
             return False
