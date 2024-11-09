@@ -78,7 +78,7 @@ class Agent:
                 if change_to_directory:
                     try:
                         os.chdir(directory)
-                    except FileNotFoundError:
+                    except NotADirectoryError:
                         pass
 
             return False
