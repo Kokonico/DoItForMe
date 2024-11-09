@@ -46,10 +46,21 @@ class Agent:
                 if "$DONE$" in command:
                     print("\033[1;37m-->", command)
                     return True
+                change_to_directory = False
+                directory = "/"
                 if command.startswith("cd "):
                     directory = command.split(" ")[1].split("\n")[0]
                     try:
-                        os.chdir(directory)
+                        if directory.startswith("~"):
+                            directory = os.path.expanduser(directory)
+                        elif directory.startswith("."):
+                            directory = os.path.join(os.getcwd(), directory)
+                        elif directory.startswith(".."):
+                            directory = os.path.join(os.getcwd(), directory)
+                        elif not directory.startswith("/"):
+                            directory = os.path.join(os.getcwd(), directory)
+                        print(directory)
+                        change_to_directory = True
                     except FileNotFoundError:
                         pass  # do nothing
                 result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
@@ -67,5 +78,7 @@ class Agent:
                     "role": "user",
                     "content": output_noansii
                 })
+                if change_to_directory:
+                    os.chdir(directory)
 
             return False

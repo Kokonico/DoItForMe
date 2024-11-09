@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "doitforme"
-version = "1.0.0"
+version = "1.0.1"
 description = "Abuse AI to do your work"
 authors = ["Kokonico <kokonico@duck.com>"]
 readme = "README.md"

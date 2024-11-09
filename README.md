@@ -1,5 +1,7 @@
 # DoitForMe
 > abuse AI to run commands on your computer for you
+> 
+> *...also doesn't work half of the time*
 
 ## WARNING
 I do ***NOT*** take responsibility for any damage caused by this software.
