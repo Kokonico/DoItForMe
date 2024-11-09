@@ -11,14 +11,25 @@ This software is ***NOT*** intended to be used by anyone, and should ***NOT*** b
 This software is ***NOT*** intended to be used for any purpose, and should ***NOT*** be used for any purpose.
 By using this software, you agree that I am not responsible for the inevitable destruction of your system.
 
+## What is this?
+DoitForMe is a very crude AI agent that runs commands on your computer for you.
+It uses the [Ollama](https://ollama.com)'s AI server to run the models, and then runs the command on your computer.
+
+a demo video can be found [here](https://www.youtube.com/watch?v=GU6c7BruAYg)
+
 ## Installation
 ```bash
 pip3.12 install doitforme
 ```
+currently, the ollama server is hardcoded to `http://localhost:11434`, this will be configurable in the future.
 
 ## Usage
 ```bash
 difm "print the contents of README.md"
+```
+change model
+```bash
+difm --model <model_name> "print the contents of README.md"
 ```
 
 ## Requirements
